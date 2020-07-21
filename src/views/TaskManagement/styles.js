@@ -16,17 +16,37 @@ const styles = (theme) => ({
     marginTop: "10px",
   },
   tasksListContainer: {
-    minHeight: "500px",
-    overflow: "hidden",
-    minWidth: "265px",
+    "&::-webkit-scrollbar": {
+      width: "7px",
+    },
+    "&::-webkit-scrollbar-track": {
+      backgroundColor: "#cacaca",
+      borderRadius: "50px",
+      marginBottom: "3px",
+      opacity: "0.3",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      backgroundColor: "darkslateblue",
+      outline: "1px solid slategrey",
+      borderRadius: "50px",
+    },
+    width: "275px",
+    height: "450px",
+    overflowX: "hidden",
+    overflowY: "auto",
+    boxSizing: "border-box",
+    paddingLeft: "5px",
+  },
+  addIcon: {
+    width: "18px",
   },
   addButton: {
     backgroundColor: "darkslateblue",
   },
   taskCard: {
-    width: "270px",
+    width: "260px",
     height: "70px",
-    marginTop: "5px",
+    marginTop: "10px",
     boxSizing: "border-box",
     padding: "10px 10px",
   },
