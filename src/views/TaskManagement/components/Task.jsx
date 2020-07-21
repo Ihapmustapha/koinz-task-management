@@ -50,5 +50,8 @@ Task.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
+  classes: PropTypes.shape({
+    taskCard: PropTypes.string,
+  }).isRequired,
 };
 export default withStyles(styles)(Task);
