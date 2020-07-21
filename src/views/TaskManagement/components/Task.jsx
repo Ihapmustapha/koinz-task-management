@@ -9,9 +9,13 @@ import { Paper, Grid, Typography, withStyles } from "@material-ui/core";
 import styles from "../styles";
 
 const Task = ({ task, index, onClick, classes }) => {
-  const { id, description, history } = task;
+  const { id, description, history, taskStatus } = task;
   return (
-    <Draggable draggableId={id} index={index}>
+    <Draggable
+      draggableId={id}
+      index={index}
+      isDragDisabled={taskStatus && taskStatus === "done"}
+    >
       {(provided, snapshot) => (
         <Paper
           className={classes.taskCard}
@@ -46,7 +50,8 @@ Task.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.string,
     description: PropTypes.string,
-    history: PropTypes.shape.isRequired,
+    history: PropTypes.shape,
+    taskStatus: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
