@@ -16,6 +16,8 @@ import {
 import Task from "./Task";
 // styles
 import styles from "../styles";
+// icons
+import AddIcon from "../../../assets/plus.svg";
 
 const Column = ({ column, tasks, classes }) => {
   const { title, id } = column;
@@ -91,7 +93,11 @@ const Column = ({ column, tasks, classes }) => {
                     color="primary"
                     size="medium"
                   >
-                    +
+                    <img
+                      src={AddIcon}
+                      alt="add icon"
+                      className={classes.addIcon}
+                    />
                   </Fab>
                 </Tooltip>
               )}
@@ -110,6 +116,7 @@ Column.propTypes = {
     titleDivider: PropTypes.string,
     tasksListContainer: PropTypes.string,
     addButton: PropTypes.string,
+    addIcon: PropTypes.string,
   }).isRequired,
   column: PropTypes.shape({
     title: PropTypes.string,
