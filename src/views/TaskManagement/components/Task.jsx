@@ -4,30 +4,30 @@ import PropTypes from "prop-types";
 // react-beautiful-dnd
 import { Draggable } from "react-beautiful-dnd";
 // components
-import { Paper, Grid, Typography } from "@material-ui/core";
+import { Paper, Grid, Typography, withStyles } from "@material-ui/core";
+// styles
+import styles from "../styles";
 
-const Task = ({ task, index, onClick }) => {
+const Task = ({ task, index, onClick, classes }) => {
   const { id, description, history } = task;
   return (
     <Draggable draggableId={id} index={index}>
       {(provided, snapshot) => (
-        <Grid
-          component={Paper}
+        <Paper
+          className={classes.taskCard}
           {...provided.dragHandleProps}
           {...provided.draggableProps}
           innerRef={provided.innerRef}
-          item
-          container
-          direction="column"
-          justify="flex-start"
-          alignItems="flex-start"
-          onClick={onClick}
-          id={id}
-          className={
-            snapshot.isDragging ? "task-card-is-dragging" : "task-card"
-          }
         >
-          <div style={{ maxWidth: "370px" }}>
+          <Grid
+            item
+            container
+            direction="column"
+            justify="flex-start"
+            alignItems="flex-start"
+            onClick={onClick}
+            id={id}
+          >
             <Grid item xs={12} lg={12}>
               {description && (
                 <Typography variant="caption" component="p">
@@ -35,8 +35,8 @@ const Task = ({ task, index, onClick }) => {
                 </Typography>
               )}
             </Grid>
-          </div>
-        </Grid>
+          </Grid>
+        </Paper>
       )}
     </Draggable>
   );
@@ -51,4 +51,4 @@ Task.propTypes = {
   index: PropTypes.number.isRequired,
   onClick: PropTypes.func.isRequired,
 };
-export default Task;
+export default withStyles(styles)(Task);
