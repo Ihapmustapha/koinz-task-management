@@ -1,6 +1,9 @@
 import React from "react";
 // prop-types
 import PropTypes from "prop-types";
+// redux
+import { compose } from "redux";
+import { connect } from "react-redux";
 // react-beautiful-dnd
 import { Droppable } from "react-beautiful-dnd";
 // components
@@ -14,18 +17,35 @@ import {
   withStyles,
 } from "@material-ui/core";
 import Task from "./Task";
+import { ContainerModal } from "../../../components";
+// redux actions
+import * as actions from "../../../store/actions";
 // styles
 import styles from "../styles";
 // icons
 import AddIcon from "../../../assets/plus.svg";
+import AddTaskForm from "./AddTaskForm";
 
-const Column = ({ column, tasks, classes }) => {
+const Column = ({ column, tasks, classes, openModal }) => {
   const { title, id } = column;
-  const handleTaskCardClick = () => {};
-  const handleNewTaskButtonClick = () => {};
+  const handleTaskCardClick = () => {
+    openModal();
+  };
+  const handleNewTaskButtonClick = () => {
+    openModal();
+  };
   return (
     <>
       {/* <Modal /> */}
+      <ContainerModal
+        title="Add New Task"
+        description
+        secondaryButtonText="cancel"
+        primaryButtonAction
+        primaryButtonText="add"
+      >
+        <AddTaskForm />
+      </ContainerModal>
       <Grid
         component={Paper}
         container
@@ -123,6 +143,17 @@ Column.propTypes = {
     id: PropTypes.string,
   }).isRequired,
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
+  openModal: PropTypes.func.isRequired,
 };
 
-export default withStyles(styles)(Column);
+const mapStateToProps = (state) => ({});
+
+const mapDispatchToProps = (dispatch) => ({
+  openModal: () => dispatch(actions.openModal()),
+  closeModal: () => dispatch(actions.closeModal()),
+});
+
+export default compose(
+  withStyles(styles),
+  connect(mapStateToProps, mapDispatchToProps)
+)(Column);
