@@ -1,1 +1,7 @@
-export { idbConnect } from "./indexeddb";
+export {
+  idbConnect,
+  idbAddItem,
+  idbReadItem,
+  idbUpdateItem,
+  idbDeleteItem,
+} from "./indexeddb";
