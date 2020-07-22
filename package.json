@@ -27,7 +27,7 @@
     "eject": "react-scripts eject",
     "commit": "git-cz",
     "lint": "eslint ./src/ --fix",
-    "format": "prettier --write \"**/*.+(js|md|json)\""
+    "format": "prettier --write \"src/**/*.+(js|md|json)\""
   },
   "eslintConfig": {
     "extends": "react-app"
