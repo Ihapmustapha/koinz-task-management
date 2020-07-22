@@ -9,14 +9,14 @@ import { Paper, Grid, Typography, withStyles } from "@material-ui/core";
 import styles from "../styles";
 
 const Task = ({ task, index, onClick, classes }) => {
-  const { id, description, history, taskStatus } = task;
+  const { id, description, taskStatus } = task;
   return (
     <Draggable
       draggableId={id}
       index={index}
       isDragDisabled={taskStatus && taskStatus === "done"}
     >
-      {(provided, snapshot) => (
+      {(provided) => (
         <Paper
           className={classes.taskCard}
           {...provided.dragHandleProps}
