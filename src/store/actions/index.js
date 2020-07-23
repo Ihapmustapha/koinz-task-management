@@ -1,7 +1,7 @@
 export { openModal, closeModal } from "./modalActions";
 export {
   addTask,
-  fetchTask,
+  fetchTasks,
   deleteTask,
   updateTask,
 } from "./taskManagementActions";

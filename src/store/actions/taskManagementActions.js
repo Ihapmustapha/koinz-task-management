@@ -1,16 +1,16 @@
 import unique from "unique-string";
 import * as actions from "./actionTypes";
 import {
-  idbReadItem,
+  idbReadAll,
   idbAddItem,
   idbUpdateItem,
   idbDeleteItem,
 } from "../../services";
 
 // fetch
-export const fetchTask = (taskId, param = null) => {
+export const fetchTasks = () => {
   return (dispatch) => {
-    idbReadItem(taskId, param)
+    idbReadAll()
       .then((response) => {
         dispatch({ type: actions.UPDATE_TASKS_LIST, payload: response });
       })
@@ -21,12 +21,12 @@ export const fetchTask = (taskId, param = null) => {
 };
 
 // add
-export const addTask = (taskDetails) => {
+export const addTask = (taskDetails, callbackFunc) => {
   return (dispatch) => {
     const id = unique();
     idbAddItem({ ...taskDetails, id })
       .then(() => {
-        fetchTask(null, "getAll");
+        if (callbackFunc) callbackFunc();
       })
       .catch((error) => {
         dispatch({ type: actions.UPDATE_TASKS_LIST_FAIL, error });
@@ -35,11 +35,11 @@ export const addTask = (taskDetails) => {
 };
 
 // update
-export const updateTask = (taskDetails) => {
+export const updateTask = (taskDetails, callbackFunc) => {
   return (dispatch) => {
     idbUpdateItem(taskDetails)
       .then(() => {
-        fetchTask(null, "getAll");
+        if (callbackFunc) callbackFunc();
       })
       .catch((error) => {
         dispatch({ type: actions.UPDATE_TASKS_LIST_FAIL, error });
@@ -48,11 +48,11 @@ export const updateTask = (taskDetails) => {
 };
 
 // delete
-export const deleteTask = (taskId) => {
+export const deleteTask = (key, callbackFunc) => {
   return (dispatch) => {
-    idbDeleteItem(taskId)
+    idbDeleteItem(key)
       .then(() => {
-        fetchTask(null, "getAll");
+        if (callbackFunc) callbackFunc();
       })
       .catch((error) => {
         dispatch({ type: actions.UPDATE_TASKS_LIST_FAIL, error });
