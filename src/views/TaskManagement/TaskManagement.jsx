@@ -1,48 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 // prop-types
 import PropTypes from "prop-types";
+// redux
+import { compose } from "redux";
+import { connect } from "react-redux";
 // beautiful-react-dnd
 import { DragDropContext } from "react-beautiful-dnd";
 // components
 import { withStyles, Grid } from "@material-ui/core";
 import { Column } from "./components";
-
 // styles
 import styles from "./styles";
+// actions
+import * as actions from "../../store/actions";
+import { tasksMapper } from "../../mappers";
 
-const TaskManagement = ({ classes }) => {
+const TaskManagement = ({ fetchTasks, tasksList }) => {
   const [state, setState] = useState({
-    tasks: {
-      task1: {
-        description: "hello",
-        id: "task1",
-        history: {},
-        taskStatus: "assigned",
-      },
-      task2: {
-        description: "hello",
-        id: "task2",
-        history: {},
-        taskStatus: "assigned",
-      },
-      task3: {
-        description: "hello",
-        id: "task3",
-        history: {},
-        taskStatus: "assigned",
-      },
-      task4: {
-        description: "hello",
-        id: "task4",
-        history: {},
-        taskStatus: "assigned",
-      },
-    },
-    columns: {
-      assigned: {
-        id: "assigned",
-        title: "Assigned",
-        taskIds: ["task1", "task2", "task3", "task4"],
+    tasks: {},
+    columns: {},
+    columnOrder: ["todo", "inProgress", "done"],
+  });
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
+  useEffect(() => {
+    const mappedTasks = tasksMapper(tasksList);
+
+    const columns = {
+      todo: {
+        id: "todo",
+        title: "To Do",
+        taskIds: [],
       },
       inProgress: {
         id: "inProgress",
@@ -54,9 +45,16 @@ const TaskManagement = ({ classes }) => {
         title: "Done",
         taskIds: [],
       },
-    },
-    columnOrder: ["assigned", "inProgress", "done"],
-  });
+    };
+
+    tasksList.forEach((task) => {
+      if (task.id && task.taskStatus) {
+        columns[task.taskStatus].taskIds.push(task.id);
+      }
+    });
+
+    setState({ ...state, tasks: mappedTasks, columns });
+  }, [tasksList]);
 
   const onDragEnd = (result) => {
     const { source, destination, draggableId } = result;
@@ -96,11 +94,11 @@ const TaskManagement = ({ classes }) => {
 
     // source !== destination
     // checking on accepted flows
-    // assigned => inProgress => done,
-    // inProgress => assigned || inProgress => done,
+    // todo => inProgress => done,
+    // inProgress => todo || inProgress => done,
     // done => nowhere
     if (
-      source.droppableId === "assigned" &&
+      source.droppableId === "todo" &&
       destination.droppableId !== "inProgress"
     )
       return;
@@ -146,23 +144,40 @@ const TaskManagement = ({ classes }) => {
       justify="space-evenly"
       alignItems="center"
     >
-      <DragDropContext onDragEnd={onDragEnd}>
-        {state.columnOrder.map((columnId) => {
-          const columnObj = state.columns[columnId];
-          const arrOfTasks = columnObj.taskIds.map(
-            (taskId) => state.tasks[taskId]
-          );
-          return (
-            <Column key={columnId} column={columnObj} tasks={arrOfTasks} />
-          );
-        })}
-      </DragDropContext>
+      {Object.entries(state.columns).length > 0 && (
+        <DragDropContext onDragEnd={onDragEnd}>
+          {state.columnOrder.map((columnId) => {
+            const columnObj = state.columns[columnId];
+            const arrOfTasks = columnObj.taskIds.map(
+              (taskId) => state.tasks[taskId]
+            );
+            return (
+              <Column key={columnId} column={columnObj} tasks={arrOfTasks} />
+            );
+          })}
+        </DragDropContext>
+      )}
     </Grid>
   );
 };
 
 TaskManagement.propTypes = {
   classes: PropTypes.shape({}).isRequired,
+  fetchTasks: PropTypes.func.isRequired,
+  tasksList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default withStyles(styles)(TaskManagement);
+const mapStateToProps = (state) => {
+  console.log(state.taskManagement);
+  return {
+    tasksList: state?.taskManagement?.tasksList || [],
+  };
+};
+const mapDispatchToProps = (dispatch) => ({
+  fetchTasks: () => dispatch(actions.fetchTasks()),
+});
+
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withStyles(styles)
+)(TaskManagement);
