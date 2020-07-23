@@ -4,9 +4,11 @@ import PropTypes from "prop-types";
 // react-beautiful-dnd
 import { Draggable } from "react-beautiful-dnd";
 // components
-import { Paper, Grid, Typography, withStyles } from "@material-ui/core";
+import { Paper, Grid, Typography, withStyles, Fab } from "@material-ui/core";
 // styles
 import styles from "../styles";
+// icons
+import ViewIcon from "../../../assets/view.svg";
 
 const Task = ({ task, index, onClick, classes }) => {
   const { id, description, taskStatus } = task;
@@ -29,8 +31,6 @@ const Task = ({ task, index, onClick, classes }) => {
             direction="column"
             justify="flex-start"
             alignItems="flex-start"
-            onClick={onClick}
-            id={id}
           >
             <Grid item xs={12} lg={12}>
               {description && (
@@ -38,6 +38,25 @@ const Task = ({ task, index, onClick, classes }) => {
                   {description}
                 </Typography>
               )}
+            </Grid>
+            <Grid
+              item
+              container
+              direction="row"
+              justify="flex-end"
+              alignItems="flex-end"
+              xs={12}
+              lg={12}
+            >
+              <Fab
+                size="small"
+                onClick={onClick(id)}
+                variant="extended"
+                color="inherit"
+                style={{ boxShadow: "none" }}
+              >
+                <img alt="view icon" src={ViewIcon} style={{ width: "15px" }} />
+              </Fab>
             </Grid>
           </Grid>
         </Paper>
@@ -50,7 +69,7 @@ Task.propTypes = {
   task: PropTypes.shape({
     id: PropTypes.string,
     description: PropTypes.string,
-    history: PropTypes.shape,
+    history: PropTypes.shape({}),
     taskStatus: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
