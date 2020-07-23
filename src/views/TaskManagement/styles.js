@@ -1,4 +1,4 @@
-const styles = (theme) => ({
+const styles = () => ({
   columnPaper: {
     width: "275px",
     height: "85vh",
@@ -45,10 +45,10 @@ const styles = (theme) => ({
   },
   taskCard: {
     width: "260px",
-    height: "70px",
+    height: "auto",
     marginTop: "10px",
     boxSizing: "border-box",
-    padding: "10px 10px",
+    padding: "20px 20px",
   },
 });
 
