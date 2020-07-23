@@ -1,5 +1,5 @@
 export { idbConnect } from "./idbConnect";
 export { idbAddItem } from "./idbAddItem";
-export { idbReadItem } from "./idbReadItem";
+export { idbReadAll } from "./idbReadAll";
 export { idbUpdateItem } from "./idbUpdateItem";
 export { idbDeleteItem } from "./idbDeleteItem";
