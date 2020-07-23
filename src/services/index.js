@@ -1,7 +1,7 @@
 export {
   idbConnect,
   idbAddItem,
-  idbReadItem,
+  idbReadAll,
   idbUpdateItem,
   idbDeleteItem,
 } from "./indexeddb";
