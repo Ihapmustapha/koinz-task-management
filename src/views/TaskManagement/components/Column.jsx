@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 // prop-types
 import PropTypes from "prop-types";
 // redux
@@ -28,24 +28,39 @@ import AddIcon from "../../../assets/plus.svg";
 
 const Column = ({ column, tasks, classes, openModal }) => {
   const { title, id } = column;
-  const handleTaskCardClick = () => {
-    openModal();
+
+  const [modalChildren, setModalChildren] = useState(null);
+  const [formType, setFormType] = useState("");
+
+  const handleTaskCardClick = (selectedTaskId) => (e) => {
+    const selectedTaskDetails = tasks.filter(
+      (element) => element.id === selectedTaskId
+    )[0];
+    if (selectedTaskDetails) {
+      setFormType("update");
+      setModalChildren(
+        <TaskForm formType="update" selectedTaskDetails={selectedTaskDetails} />
+      );
+      openModal();
+    }
   };
+
   const handleNewTaskButtonClick = () => {
+    setFormType("add");
+    setModalChildren(<TaskForm formType="add" />);
     openModal();
   };
+
   return (
     <>
       {/* <Modal /> */}
-      <ContainerModal
-        title="Add New Task"
-        description
-        secondaryButtonText="cancel"
-        primaryButtonAction
-        primaryButtonText="add"
-      >
-        <TaskForm />
-      </ContainerModal>
+      {modalChildren && (
+        <ContainerModal
+          title={formType === "add" ? "Add New Task" : "Update Task"}
+        >
+          {modalChildren}
+        </ContainerModal>
+      )}
       <Grid
         component={Paper}
         container
@@ -105,7 +120,7 @@ const Column = ({ column, tasks, classes, openModal }) => {
             justify="flex-end"
           >
             <Grid item>
-              {id === "assigned" && (
+              {id === "todo" && (
                 <Tooltip title="Add New Task">
                   <Fab
                     onClick={handleNewTaskButtonClick}
@@ -146,7 +161,7 @@ Column.propTypes = {
   openModal: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({});
+const mapStateToProps = () => ({});
 
 const mapDispatchToProps = (dispatch) => ({
   openModal: () => dispatch(actions.openModal()),
