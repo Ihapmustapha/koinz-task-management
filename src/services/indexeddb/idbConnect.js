@@ -16,12 +16,8 @@ export const idbConnect = () => {
       const objectStore = db.createObjectStore("task-management", {
         autoIncrement: true,
       });
-      // adding object store indexes
-      objectStore.createIndex("description", "description", { unique: false });
-      objectStore.createIndex("history", "history", { unique: false });
+      // adding object store index
       objectStore.createIndex("id", "id", { unique: true });
-      objectStore.createIndex("taskStatus", "taskStatus", { unique: false });
-
       resolve(db);
     };
 
