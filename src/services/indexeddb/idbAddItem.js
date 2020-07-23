@@ -1,22 +1,24 @@
 import { idbConnect } from "./idbConnect";
 
 export const idbAddItem = (item) => {
-  idbConnect()
-    .then((db) => {
-      const request = db
-        .transaction(["task-management"], "readwrite")
-        .objectStore("task-management")
-        .add({ ...item });
+  return new Promise((resolve, reject) => {
+    idbConnect()
+      .then((db) => {
+        const request = db
+          .transaction(["task-management"], "readwrite")
+          .objectStore("task-management")
+          .add({ ...item });
 
-      request.onsuccess = () => {
-        return Promise.resolve("Item Added Successfully!");
-      };
+        request.onsuccess = () => {
+          resolve("Item Added Successfully!");
+        };
 
-      request.onerror = (error) => {
-        return Promise.reject(error);
-      };
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    });
+        request.onerror = (error) => {
+          reject(error);
+        };
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
 };
