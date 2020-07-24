@@ -1,1 +1,1 @@
-export { default as ContainerModal } from "./ContainerModal";
+export { ContainerModal } from "./ContainerModal";

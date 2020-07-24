@@ -6,9 +6,9 @@ import { connect } from "react-redux";
 // components
 import { TextField, Grid, Button } from "@material-ui/core";
 // redux actions
-import * as actions from "../../../store/actions";
+import * as actions from "../../../../store/actions";
 // helpers
-import { getDateOfNow } from "../../../utils/helpers";
+import { getDateOfNow } from "../../../../utils/helpers";
 
 const TaskForm = ({
   formType,

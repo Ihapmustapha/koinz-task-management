@@ -6,9 +6,9 @@ import { Draggable } from "react-beautiful-dnd";
 // components
 import { Paper, Grid, Typography, withStyles, Fab } from "@material-ui/core";
 // styles
-import styles from "../styles";
+import styles from "../../styles";
 // icons
-import ViewIcon from "../../../assets/view.svg";
+import ViewIcon from "../../../../assets/view.svg";
 
 const Task = ({ task, index, onClick, classes }) => {
   const { id, description, taskStatus } = task;

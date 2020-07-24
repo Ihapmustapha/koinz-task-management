@@ -1,3 +1,3 @@
-export { default as Task } from "./Task";
-export { default as TaskForm } from "./TaskForm";
-export { default as Column } from "./Column";
+export { Task } from "./Task";
+export { TaskForm } from "./TaskForm";
+export { Column } from "./Column";

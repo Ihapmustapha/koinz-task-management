@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 // redux
 import { connect } from "react-redux";
-import * as actions from "../store/actions";
+import * as actions from "../../store/actions";
 
 const ContainerModal = ({
   children,

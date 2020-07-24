@@ -16,15 +16,15 @@ import {
   Typography,
   withStyles,
 } from "@material-ui/core";
-import Task from "./Task";
-import TaskForm from "./TaskForm";
-import { ContainerModal } from "../../../components";
+import Task from "../Task/Task";
+import TaskForm from "../TaskForm/TaskForm";
+import { ContainerModal } from "../../../../components";
 // redux actions
-import * as actions from "../../../store/actions";
+import * as actions from "../../../../store/actions";
 // styles
-import styles from "../styles";
+import styles from "../../styles";
 // icons
-import AddIcon from "../../../assets/plus.svg";
+import AddIcon from "../../../../assets/plus.svg";
 
 const Column = ({ column, tasks, classes, openModal }) => {
   const { title, id } = column;
