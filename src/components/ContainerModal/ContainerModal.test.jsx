@@ -1,6 +1,10 @@
 import React from "react";
 import { mount } from "enzyme";
-import { DialogTitle, DialogContentText } from "@material-ui/core";
+import {
+  DialogTitle,
+  DialogContentText,
+  DialogContent,
+} from "@material-ui/core";
 import ContainerModal from "./ContainerModal";
 import { MockedProvider } from "../../test-utils";
 
@@ -34,5 +38,13 @@ describe("<ContainerModal />", () => {
 
     expect(wrapper.find(DialogContentText).exists()).toBe(true);
     expect(wrapper.find(DialogContentText).text()).toBe(description);
+  });
+
+  it("should render the children inside the Content", () => {
+    const DummyContent = () => <div>Dummy Content</div>;
+
+    wrapper = getWrapper({ children: <DummyContent /> });
+
+    expect(wrapper.find(DialogContent).find(DummyContent).exists()).toBe(true);
   });
 });
