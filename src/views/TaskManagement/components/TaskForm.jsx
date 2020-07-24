@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import { TextField, Grid, Button } from "@material-ui/core";
 // redux actions
 import * as actions from "../../../store/actions";
+// helpers
+import { getDateOfNow } from "../../../utils/helpers";
 
 const TaskForm = ({
   formType,
@@ -45,7 +47,7 @@ const TaskForm = ({
       addTask(
         {
           ...formState,
-          history: { notes: ["Task Added"] },
+          history: { notes: [`Task Added at ${getDateOfNow()}`] },
           taskStatus: "todo",
         },
         () => {
@@ -55,9 +57,19 @@ const TaskForm = ({
         }
       );
     } else if (formType === "update") {
-      const updatedTaskDetails = { ...selectedTaskDetails, ...formState };
+      const updatedTaskDetails = {
+        ...selectedTaskDetails,
+        ...formState,
+        history: {
+          notes: [
+            ...selectedTaskDetails.history.notes,
+            `Task Details Updated at ${getDateOfNow()}`,
+          ],
+        },
+      };
       updateTask(updatedTaskDetails, () => {
         closeModal();
+        // to update rendered tasks
         fetchTasks();
       });
     }
@@ -96,6 +108,28 @@ const TaskForm = ({
             value={description}
           />
         </Grid>
+        {formType === "update" && (
+          <Grid
+            item
+            container
+            diraction="column"
+            justify="flex-start"
+            alignItems="flex-start"
+            style={{ width: "400px", marginTop: "5px" }}
+          >
+            <Grid item>
+              <p style={{ fontSize: "12px", fontWeight: 500 }}>Task History</p>
+              <ul>
+                {selectedTaskDetails?.history?.notes &&
+                  selectedTaskDetails.history.notes.map((historyElement) => (
+                    <li key={historyElement} style={{ fontSize: "11px" }}>
+                      {historyElement}
+                    </li>
+                  ))}
+              </ul>
+            </Grid>
+          </Grid>
+        )}
         <Grid item style={{ width: "400px", marginTop: "5px" }}>
           <Button
             type="submit"
@@ -149,6 +183,7 @@ TaskForm.propTypes = {
   selectedTaskDetails: PropTypes.shape({
     description: PropTypes.string,
     id: PropTypes.string,
+    history: PropTypes.shape({ notes: PropTypes.arrayOf(PropTypes.string) }),
   }),
   closeModal: PropTypes.func.isRequired,
   fetchTasks: PropTypes.func.isRequired,

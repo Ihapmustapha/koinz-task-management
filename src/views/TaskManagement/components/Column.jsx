@@ -47,7 +47,7 @@ const Column = ({ column, tasks, classes, openModal }) => {
 
   const handleNewTaskButtonClick = () => {
     setFormType("add");
-    setModalChildren(<TaskForm formType="add" />);
+    setModalChildren(<TaskForm formType="add" selectedTaskDetails={null} />);
     openModal();
   };
 

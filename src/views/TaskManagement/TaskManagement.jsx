@@ -13,9 +13,12 @@ import { Column } from "./components";
 import styles from "./styles";
 // actions
 import * as actions from "../../store/actions";
+// mappers
 import { tasksMapper } from "../../mappers";
+// helpers
+import { getDateOfNow } from "../../utils/helpers";
 
-const TaskManagement = ({ fetchTasks, tasksList }) => {
+const TaskManagement = ({ fetchTasks, tasksList, updateTask }) => {
   const [state, setState] = useState({
     tasks: {},
     columns: {},
@@ -59,7 +62,6 @@ const TaskManagement = ({ fetchTasks, tasksList }) => {
   const onDragEnd = (result) => {
     const { source, destination, draggableId } = result;
     const { columns } = state;
-
     // user dropped it outside all droppables
     if (!destination) return;
     // user didn't change item position, dragged and
@@ -118,10 +120,23 @@ const TaskManagement = ({ fetchTasks, tasksList }) => {
 
     const newTaskStatus = newEndColumn.id;
     const taskId = draggableId;
+
     const newTasks = { ...state.tasks };
     const newTaskData = { ...newTasks[taskId] };
+    // updating task status
     newTaskData.taskStatus = newTaskStatus;
+    // updating task history/notes
+    const newTaskHistory = { ...newTasks[taskId].history };
+    const newHistoryNotes = [
+      ...newTaskHistory.notes,
+      `Task Status Updated At ${getDateOfNow()}`,
+    ];
+    newTaskHistory.notes = newHistoryNotes;
+    newTaskData.history = newTaskHistory;
     newTasks[taskId] = newTaskData;
+
+    // calling updateTask
+    updateTask(newTaskData);
 
     setState({
       ...state,
@@ -164,17 +179,19 @@ const TaskManagement = ({ fetchTasks, tasksList }) => {
 TaskManagement.propTypes = {
   classes: PropTypes.shape({}).isRequired,
   fetchTasks: PropTypes.func.isRequired,
+  updateTask: PropTypes.func.isRequired,
   tasksList: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.taskManagement);
   return {
     tasksList: state?.taskManagement?.tasksList || [],
   };
 };
 const mapDispatchToProps = (dispatch) => ({
   fetchTasks: () => dispatch(actions.fetchTasks()),
+  updateTask: (taskDetails, callbackFunc) =>
+    dispatch(actions.updateTask(taskDetails, callbackFunc)),
 });
 
 export default compose(
