@@ -81,7 +81,11 @@ const Column = ({ column, tasks, classes, openModal }) => {
           alignItems="flex-start"
         >
           <Grid item xs={12}>
-            <Typography variant="body2" className={classes.columnTitle}>
+            <Typography
+              variant="body2"
+              id="column-title-test-id"
+              className={classes.columnTitle}
+            >
               {title}
             </Typography>
             <Divider className={classes.titleDivider} />
@@ -127,6 +131,7 @@ const Column = ({ column, tasks, classes, openModal }) => {
                     className={classes.addButton}
                     color="primary"
                     size="medium"
+                    id="add-task-fab-test-id"
                   >
                     <img
                       src={AddIcon}
