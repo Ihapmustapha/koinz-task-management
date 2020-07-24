@@ -9,7 +9,7 @@ const MockedProvider = ({ initialState, children }) => (
 
 MockedProvider.propTypes = {
   initialState: PropTypes.shape({}).isRequired,
-  children: PropTypes.arrayOf(PropTypes.node).isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 export default MockedProvider;
