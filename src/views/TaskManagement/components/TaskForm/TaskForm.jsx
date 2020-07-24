@@ -106,6 +106,7 @@ const TaskForm = ({
             rows={5}
             onChange={onChange}
             value={description}
+            id="test-description-input-id"
           />
         </Grid>
         {formType === "update" && (
@@ -150,6 +151,7 @@ const TaskForm = ({
           disableElevation
           color="inherit"
           onClick={closeModal}
+          id="test-cancel-button"
         >
           Cancel
         </Button>
@@ -162,6 +164,7 @@ const TaskForm = ({
             disableElevation
             color="secondary"
             onClick={handleTaskDeletion}
+            id="test-delete-button"
           >
             Delete
           </Button>
