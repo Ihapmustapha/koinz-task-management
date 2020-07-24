@@ -57,6 +57,7 @@ describe("<TaskForm /> with no props", () => {
         },
       });
 
+    container.update();
     expect(
       container.find("#test-description-input-id").at(1).props().value
     ).toEqual("dummy task desc");
