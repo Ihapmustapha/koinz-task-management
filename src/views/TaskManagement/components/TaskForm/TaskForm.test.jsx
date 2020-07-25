@@ -7,12 +7,17 @@ import { MockedProvider } from "../../../../test-utils";
 describe("<TaskForm /> with no props", () => {
   const getContainer = (props) =>
     mount(
-      <MockedProvider initialState={{ modalState: { isOpen: true } }}>
+      <MockedProvider
+        initialState={{
+          modalState: { isOpen: true },
+          taskForm: { formType: "update" },
+        }}
+      >
         <TaskForm {...props} />
       </MockedProvider>
     );
 
-  let container = getContainer({ formType: "add" });
+  let container = getContainer({});
 
   it("should match the snapshot", () => {
     expect(container).toMatchSnapshot();
@@ -72,8 +77,6 @@ describe("<TaskForm /> with no props", () => {
       true
     );
   });
-
-  container = getContainer({ formType: "update" });
 
   it("should contain a button for delete", () => {
     expect(container.find("button[id='test-delete-button']").exists()).toBe(
