@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 // prop-types
 import PropTypes from "prop-types";
 // redux
@@ -26,41 +26,39 @@ import styles from "../../styles";
 // icons
 import AddIcon from "../../../../assets/plus.svg";
 
-const Column = ({ column, tasks, classes, openModal }) => {
+const Column = ({
+  column,
+  tasks,
+  classes,
+  openModal,
+  formType,
+  updateTaskFormState,
+}) => {
   const { title, id } = column;
 
-  const [modalChildren, setModalChildren] = useState(null);
-  const [formType, setFormType] = useState("");
-
-  const handleTaskCardClick = (selectedTaskId) => (e) => {
+  const handleTaskCardClick = (selectedTaskId) => () => {
     const selectedTaskDetails = tasks.filter(
       (element) => element.id === selectedTaskId
     )[0];
     if (selectedTaskDetails) {
-      setFormType("update");
-      setModalChildren(
-        <TaskForm formType="update" selectedTaskDetails={selectedTaskDetails} />
-      );
+      updateTaskFormState({ formType: "update", selectedTaskDetails });
       openModal();
     }
   };
 
   const handleNewTaskButtonClick = () => {
-    setFormType("add");
-    setModalChildren(<TaskForm formType="add" selectedTaskDetails={null} />);
     openModal();
   };
 
   return (
     <>
       {/* <Modal /> */}
-      {modalChildren && (
-        <ContainerModal
-          title={formType === "add" ? "Add New Task" : "Update Task"}
-        >
-          {modalChildren}
-        </ContainerModal>
-      )}
+      <ContainerModal
+        title={formType === "add" ? "Add New Task" : "Update Task"}
+      >
+        <TaskForm />
+      </ContainerModal>
+
       <Grid
         component={Paper}
         container
@@ -164,13 +162,25 @@ Column.propTypes = {
   }).isRequired,
   tasks: PropTypes.arrayOf(PropTypes.object).isRequired,
   openModal: PropTypes.func.isRequired,
+  formType: PropTypes.string.isRequired,
+  updateTaskFormState: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => ({});
+const mapStateToProps = (state) => {
+  return {
+    formType: state.taskForm.formType,
+    selectedTaskDetails: state.taskForm.selectedTaskDetails,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   openModal: () => dispatch(actions.openModal()),
   closeModal: () => dispatch(actions.closeModal()),
+  updateTaskFormState: (newState) =>
+    dispatch(actions.updateTaskFormState(newState)),
+  clearTaskFormState: () => dispatch(actions.clearTaskFormState()),
+  handleTaskDescriptionChange: (value) =>
+    dispatch(actions.handleTaskDescriptionChange(value)),
 });
 
 export default compose(

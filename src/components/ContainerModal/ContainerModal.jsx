@@ -28,6 +28,7 @@ const ContainerModal = ({
         onClose={handleClose}
         aria-labelledby="dialog-title"
         aria-describedby="dialog-description"
+        keepMounted={false}
       >
         {title && <DialogTitle id="dialog-title">{title}</DialogTitle>}
         <DialogContent>

@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // prop-types
 import PropTypes from "prop-types";
 // redux connect
@@ -20,24 +18,15 @@ const TaskForm = ({
   fetchTasks,
   updateTask,
   deleteTask,
+  handleTaskDescriptionChange,
+  clearTaskFormState,
 }) => {
-  // form state
-  const [formState, setFormState] = useState({
-    description: "",
-  });
-
   // update button state
   const [updateButtonIsDisabled, setUpdateButtonIsDisabled] = useState(true);
 
-  // initiating task description from props when formType = "update"
-  useEffect(() => {
-    if (formType === "update" && selectedTaskDetails.description)
-      setFormState({ description: selectedTaskDetails.description });
-  }, []);
-
   // handling description input changes
   const onChange = (e) => {
-    setFormState({ [e.target.name]: e.target.value });
+    handleTaskDescriptionChange(e.target.value);
     // enable update button when user starts typing
     if (formType === "update") setUpdateButtonIsDisabled(false);
   };
@@ -48,11 +37,12 @@ const TaskForm = ({
     if (formType === "add") {
       addTask(
         {
-          ...formState,
+          ...selectedTaskDetails,
           history: { notes: [`Task Added at ${getDateOfNow()}`] },
           taskStatus: "todo",
         },
         () => {
+          clearTaskFormState();
           closeModal();
           // to update rendered tasks
           fetchTasks();
@@ -61,7 +51,6 @@ const TaskForm = ({
     } else if (formType === "update") {
       const updatedTaskDetails = {
         ...selectedTaskDetails,
-        ...formState,
         history: {
           notes: [
             ...selectedTaskDetails.history.notes,
@@ -85,7 +74,7 @@ const TaskForm = ({
     });
   };
 
-  const { description } = formState;
+  const { description } = selectedTaskDetails;
 
   return (
     <Grid
@@ -194,10 +183,15 @@ TaskForm.propTypes = {
   fetchTasks: PropTypes.func.isRequired,
   updateTask: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
+  handleTaskDescriptionChange: PropTypes.func.isRequired,
+  clearTaskFormState: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state) => {
+  return {
+    formType: state.taskForm.formType,
+    selectedTaskDetails: state.taskForm.selectedTaskDetails,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -209,6 +203,11 @@ const mapDispatchToProps = (dispatch) => ({
   deleteTask: (taskId, callbackFunc) =>
     dispatch(actions.deleteTask(taskId, callbackFunc)),
   closeModal: () => dispatch(actions.closeModal()),
+  updateTaskFormState: (newState) =>
+    dispatch(actions.updateTaskFormState(newState)),
+  clearTaskFormState: () => dispatch(actions.clearTaskFormState()),
+  handleTaskDescriptionChange: (value) =>
+    dispatch(actions.handleTaskDescriptionChange(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TaskForm);

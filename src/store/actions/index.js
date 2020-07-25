@@ -5,3 +5,8 @@ export {
   deleteTask,
   updateTask,
 } from "./taskManagementActions";
+export {
+  updateTaskFormState,
+  clearTaskFormState,
+  handleTaskDescriptionChange,
+} from "./TaskFormActions";
