@@ -52,7 +52,7 @@ describe("<Task /> with no props", () => {
   container.update();
 
   it("should match the snapshot", () => {
-    expect(container).toMatchSnapshot();
+    expect(container.html()).toMatchSnapshot();
   });
 
   it("should contain a material ui paper as a card", () => {

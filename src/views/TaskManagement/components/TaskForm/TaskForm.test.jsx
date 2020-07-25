@@ -17,10 +17,10 @@ describe("<TaskForm /> with no props", () => {
       </MockedProvider>
     );
 
-  let container = getContainer({});
+  const container = getContainer({});
 
   it("should match the snapshot", () => {
-    expect(container).toMatchSnapshot();
+    expect(container.html()).toMatchSnapshot();
   });
 
   it("should contain a form", () => {
