@@ -15,11 +15,11 @@ const getWrapper = (props) =>
     </MockedProvider>
   );
 
-describe("<ContainerModal />", () => {
-  let wrapper;
+let wrapper = getWrapper({});
 
-  afterEach(() => {
-    wrapper.unmount();
+describe("<ContainerModal />", () => {
+  it("should match the snapshot", () => {
+    expect(wrapper.html()).toMatchSnapshot();
   });
 
   it("should render a title", () => {
