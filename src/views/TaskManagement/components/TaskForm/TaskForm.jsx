@@ -59,7 +59,6 @@ const TaskForm = ({
         },
       };
       updateTask(updatedTaskDetails, () => {
-        clearTaskFormState();
         closeModal();
         // to update rendered tasks
         fetchTasks();
@@ -70,7 +69,6 @@ const TaskForm = ({
   const handleTaskDeletion = () => {
     const taskId = selectedTaskDetails.id;
     deleteTask(taskId, () => {
-      clearTaskFormState();
       closeModal();
       fetchTasks();
     });
