@@ -28,11 +28,15 @@ describe("<TaskForm /> with no props", () => {
   });
 
   it("should contain task details input", () => {
-    expect(container.find("#test-description-input-id").exists()).toBe(true);
+    expect(
+      container.find("[data-testid='test-description-input-id']").exists()
+    ).toBe(true);
   });
 
   it("should have proper props for task details input", () => {
-    expect(container.find("#test-description-input-id").at(1).props()).toEqual({
+    expect(
+      container.find("[data-testid='test-description-input-id']").at(1).props()
+    ).toEqual({
       variant: "outlined",
       placeholder: "Task Description",
       label: "Task Description",
@@ -41,7 +45,7 @@ describe("<TaskForm /> with no props", () => {
       rows: 5,
       onChange: expect.any(Function),
       fullWidth: true,
-      id: "test-description-input-id",
+      "data-testid": "test-description-input-id",
       multiline: true,
       value: "",
       classes: {
@@ -52,7 +56,7 @@ describe("<TaskForm /> with no props", () => {
 
   it("should change input value onChange", () => {
     container
-      .find("#test-description-input-id")
+      .find("[data-testid='test-description-input-id']")
       .at(1)
       .simulate("focus")
       .simulate("change", {
@@ -64,7 +68,8 @@ describe("<TaskForm /> with no props", () => {
 
     container.update();
     expect(
-      container.find("#test-description-input-id").at(1).props().value
+      container.find("[data-testid='test-description-input-id']").at(1).props()
+        .value
     ).toEqual("dummy task desc");
   });
 

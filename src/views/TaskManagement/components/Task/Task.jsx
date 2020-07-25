@@ -24,7 +24,7 @@ const Task = ({ task, index, onClick, classes }) => {
           {...provided.dragHandleProps}
           {...provided.draggableProps}
           innerRef={provided.innerRef}
-          id="task-paper"
+          data-testid="task-paper-test-id"
         >
           <Grid
             item
@@ -38,7 +38,7 @@ const Task = ({ task, index, onClick, classes }) => {
                 <Typography
                   variant="caption"
                   component="p"
-                  id="desc-typography-test-id"
+                  data-testid="desc-typography-test-id"
                 >
                   {description.length > 45
                     ? `${description.substr(0, 45)}...`
@@ -61,7 +61,7 @@ const Task = ({ task, index, onClick, classes }) => {
                 variant="extended"
                 color="inherit"
                 style={{ boxShadow: "none" }}
-                id="view-task-fab"
+                data-testid="view-task-fab"
               >
                 <img alt="view icon" src={ViewIcon} style={{ width: "15px" }} />
               </Fab>

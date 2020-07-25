@@ -23,10 +23,14 @@ describe("<Column /> with no props", () => {
   });
 
   it("should contain typography title", () => {
-    expect(container.find("#column-title-test-id").at(1).text()).toBe("To Do");
+    expect(
+      container.find("[data-testid='column-title-test-id']").at(1).text()
+    ).toBe("To Do");
   });
 
   it("should contain Fab button to add new task when column is To Do", () => {
-    expect(container.find("#add-task-fab-test-id").exists()).toBe(true);
+    expect(
+      container.find("[data-testid='add-task-fab-test-id']").exists()
+    ).toBe(true);
   });
 });

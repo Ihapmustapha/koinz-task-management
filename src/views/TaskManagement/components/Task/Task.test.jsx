@@ -56,14 +56,18 @@ describe("<Task /> with no props", () => {
   });
 
   it("should contain a material ui paper as a card", () => {
-    expect(container.find("#task-paper").exists()).toBe(true);
+    expect(container.find("[data-testid='task-paper-test-id']").exists()).toBe(
+      true
+    );
   });
 
   it("should have typography to render task description", () => {
-    expect(container.find("#desc-typography-test-id").exists()).toBe(true);
+    expect(
+      container.find("[data-testid='desc-typography-test-id']").exists()
+    ).toBe(true);
   });
 
   it("should have typography to render task description", () => {
-    expect(container.find("#view-task-fab").exists()).toBe(true);
+    expect(container.find("[data-testid='view-task-fab']").exists()).toBe(true);
   });
 });

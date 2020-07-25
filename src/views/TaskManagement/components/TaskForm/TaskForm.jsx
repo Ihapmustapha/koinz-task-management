@@ -97,7 +97,7 @@ const TaskForm = ({
             rows={5}
             onChange={onChange}
             value={description}
-            id="test-description-input-id"
+            data-testid="test-description-input-id"
           />
         </Grid>
         {formType === "update" && (

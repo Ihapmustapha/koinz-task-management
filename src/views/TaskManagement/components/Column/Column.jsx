@@ -81,7 +81,7 @@ const Column = ({
           <Grid item xs={12}>
             <Typography
               variant="body2"
-              id="column-title-test-id"
+              data-testid="column-title-test-id"
               className={classes.columnTitle}
             >
               {title}
@@ -129,7 +129,7 @@ const Column = ({
                     className={classes.addButton}
                     color="primary"
                     size="medium"
-                    id="add-task-fab-test-id"
+                    data-testid="add-task-fab-test-id"
                   >
                     <img
                       src={AddIcon}
