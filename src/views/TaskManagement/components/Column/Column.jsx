@@ -33,6 +33,7 @@ const Column = ({
   openModal,
   formType,
   updateTaskFormState,
+  clearTaskFormState,
 }) => {
   const { title, id } = column;
 
@@ -41,12 +42,14 @@ const Column = ({
       (element) => element.id === selectedTaskId
     )[0];
     if (selectedTaskDetails) {
+      clearTaskFormState();
       updateTaskFormState({ formType: "update", selectedTaskDetails });
       openModal();
     }
   };
 
   const handleNewTaskButtonClick = () => {
+    clearTaskFormState();
     openModal();
   };
 
@@ -164,6 +167,7 @@ Column.propTypes = {
   openModal: PropTypes.func.isRequired,
   formType: PropTypes.string.isRequired,
   updateTaskFormState: PropTypes.func.isRequired,
+  clearTaskFormState: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {

@@ -19,7 +19,6 @@ const TaskForm = ({
   updateTask,
   deleteTask,
   handleTaskDescriptionChange,
-  clearTaskFormState,
 }) => {
   // update button state
   const [updateButtonIsDisabled, setUpdateButtonIsDisabled] = useState(true);
@@ -42,7 +41,6 @@ const TaskForm = ({
           taskStatus: "todo",
         },
         () => {
-          clearTaskFormState();
           closeModal();
           // to update rendered tasks
           fetchTasks();
@@ -184,7 +182,6 @@ TaskForm.propTypes = {
   updateTask: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   handleTaskDescriptionChange: PropTypes.func.isRequired,
-  clearTaskFormState: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => {
@@ -205,7 +202,6 @@ const mapDispatchToProps = (dispatch) => ({
   closeModal: () => dispatch(actions.closeModal()),
   updateTaskFormState: (newState) =>
     dispatch(actions.updateTaskFormState(newState)),
-  clearTaskFormState: () => dispatch(actions.clearTaskFormState()),
   handleTaskDescriptionChange: (value) =>
     dispatch(actions.handleTaskDescriptionChange(value)),
 });
